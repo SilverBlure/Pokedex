@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokemonApi</title>
+    <link rel="icon" href="/icons/pokeball-pokemon-catch-svgrepo-com.ico">
+    <script src="./javaScript/script.js"></script>
+    <script src="./javaScript/templates.js"></script>
+    <script src="./javaScript/colorControler.js"></script>
+    <link rel="stylesheet" href="./style.css"></link>
+</head>
+
+
+<body onload="init()">
+    <div class="none" id="dialog"></div>
+    <header class="page mar16">
+        <header class="header ">
+            <div class="alingCenter">
+                <h1 class="headline ">Pokemon</h1>
+                <h2>catch all of the first gen.</h2>
+            </div>
+            <div class="end marbo6">
+                <input placeholder="search name!" id="searchValue">
+                <button onclick="search()">search!</button>
+            </div>
+        </header>
+    </header>
+
+    <main class="cardBody mar16">
+        <div class="wrap center">
+            <div class="arrows">
+                <img onclick="back()" class="arrowSize leftArrow" src="./icons/arrow_back.svg">
+                <div class="wrap cardsDistance" id="mainSpace"></div>
+                <img onclick="next()" class="arrowSize rightArrow" src="./icons/arrow_forward.svg">
+            </div>
+        </div>
+    </main>
+
+    <footer class="page cardBody footer mar16">
+        <div class="footer">
+            <div>
+                <input id="amount" max="20" type="number" placeholder="max. 20"><button onclick="saveCardOnSide()">go!</button>
+            </div>
+            <div>
+                <a class="link">Impressum</a><br>
+                <a class="link">AGB</a><br>
+                <a class="link">Datenschutz</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
