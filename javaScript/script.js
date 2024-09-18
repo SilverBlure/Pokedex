@@ -17,11 +17,10 @@ let urlDatabase = [];
 let pokemonObjektArray = [];
 
 
-async function init() {
+function init() {
     firstLoad();
     loadPropertys();
     loadUrls();
-    renderSmallCards();
 }
 
 function firstLoad() {                   // set Propertys at the first load
@@ -54,11 +53,10 @@ async function getUrls(amount, currentCard) {        // getting pokemon urls and
 }
 
 async function fetchPokemonData(url, index) {     // fetches pokemon datasets and put it in objects
+    let amount = localStorage.getItem('amount')
     let pokemonResponse = await fetch(url);
     let pokemonDataAsJson = await pokemonResponse.json();
-
-//console.log(pokemonDataAsJson);
-
+    //console.log(pokemonDataAsJson);
     const pokemonData = {
         id: pokemonDataAsJson['id'],
         name: pokemonDataAsJson['forms'][0]['name'],
@@ -79,20 +77,24 @@ async function fetchPokemonData(url, index) {     // fetches pokemon datasets an
         scream: pokemonDataAsJson['cries']['legacy'],
     }
     pokemonObjektArray.push(pokemonData);
-    //console.log(pokemonData, index);
-    
-    renderSmallCards(pokemonData, index);
-    checkColor(pokemonData, index);
-    }
+    //console.log(pokemonDataAsJson);   
+    if(pokemonObjektArray.length == amount){
+        pokemonObjektArray.sort((a,b) => a.id - b.id);
+        //console.log(pokemonObjektArray);
+        renderSmallCards();
+    }   
+}
 
+//smallCardTemplate(pokemonData, index);
+                    //checkColor(pokemonData, index);
 
-
-function renderSmallCards(pokemonData, index){                                //<------ hier sitzt der fehler!!!
+function renderSmallCards() {                                //<------ hier sitzt der fehler!!!
     clearMainSpace();
-    for(let i = 0; i<pokemonObjektArray.length; i++){
-        smallCardTemplate(pokemonObjektArray, i); 
+    for (let i = 0; i < pokemonObjektArray.length; i++) {
+        smallCardTemplate(pokemonObjektArray[i], i);
+        checkColor(pokemonObjektArray[i], i);
     }
-    
+
 }
 
 function saveCardOnSide() {             	        // saves the new amount of cards in the local storage
@@ -108,7 +110,7 @@ function saveCardOnSide() {             	        // saves the new amount of card
 
 }
 
-function next() {  
+function next() {
     pokemonObjektArray = [];                                 // get values from the local storage add numbers and reload mainspace
     let currentCard = parseInt(localStorage.getItem('currentCard'));
     let amount = parseInt(localStorage.getItem('amount'));
@@ -120,7 +122,7 @@ function next() {
     loadPropertys();
 }
 
-function back() {  
+function back() {
     pokemonObjektArray = [];                                 // back function checks and not getting beyond zero
     let currentCard = parseInt(localStorage.getItem('currentCard'));
     let amount = parseInt(localStorage.getItem('amount'));
@@ -140,14 +142,14 @@ function back() {
     }
 }
 
-async function loadUrls(){
+async function loadUrls() {
     let mainUrl = await fetch("https://pokeapi.co/api/v2/pokemon?limit=100000&offset=1");
-    let mainUrlAsJson   = await mainUrl.json();
+    let mainUrlAsJson = await mainUrl.json();
     //console.log(mainUrlAsJson.results);
     urlDatabase = mainUrlAsJson.results;
 }
-   
-function search(){
+
+function search() {
 
     let searchValue = document.getElementById('searchValue').value;             //get value of inputfield
     let lowerCaseSearchValue = searchValue.toLowerCase();                      //set string to lowerCase
@@ -156,15 +158,15 @@ function search(){
 
 
     const result = urlDatabase.find((element) => element.name === lowerCaseSearchValue);    //search in urlDatabase for element with name of input field
-    if(result){
+    if (result) {
         const urlOfResult = result.url;
         //console.log(urlOfResult);
         clearMainSpace();
         fetchPokemonData(urlOfResult);
-    }else{
+    } else {
         console.log("nothing found here!");
     }
-    
+
 
     //return items.filter(item => item.name.toLowerCase().includes(lowerCaseQuery));
 

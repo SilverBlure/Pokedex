@@ -4,18 +4,18 @@ function clearMainSpace() {
 
 function smallCardTemplate(pokemon, i) { //render the smallCards 
     //console.log(pokemon);
-   return document.getElementById('mainSpace').innerHTML += /*html*/`
+    return document.getElementById('mainSpace').innerHTML += /*html*/`
     <div onclick="dialogTemplate(${i})" class="cardBody cardSmall marle16 marto16 marbo8">
     <div  class="center">
-        <img id="cardPicBg_${i}" class="size" src="${pokemon[i].frontPic}">
+        <img id="cardPicBg_${i}" class="size" src="${pokemon.frontPic}">
     </div>
     <div class="tags margin8 ">
-        <div id="type_1${i}" class="border">${pokemon[i].type_1}</div>
-        <div id="type_2${i}" class="border">${pokemon[i].type_2}</div>
-        <div class="border">${pokemon[i].id}</div>
+        <div id="type_1${i}" class="border">${pokemon.type_1}</div>
+        <div id="type_2${i}" class="border">${pokemon.type_2}</div>
+        <div class="border">${pokemon.id}</div>
     </div>
     <div class="tags ">
-        <h1>${pokemon[i].name}</h1>
+        <h1>${pokemon.name}</h1>
     </div>
 </div>`;
 }
@@ -25,7 +25,7 @@ function dialogTemplate(i) {        //load the data in the Dialog Template and e
     console.log(pokemonObjektArray);
     let pokemonData = pokemonObjektArray[i]
     console.log(pokemonData);
- document.getElementById('dialog').innerHTML =/*html*/`
+    document.getElementById('dialog').innerHTML =/*html*/`
  <div id="dialog" class="dialogBg dialog">
         <div class="bigCardBody">
             <div class="flex spaceAround"> 
@@ -78,8 +78,8 @@ function mainTemplate(i) {              //renders the MainTemplate in the Canvas
     </div>`;
 }
 
-function playSound(i){              //plays pokemon Sound *graaahhh*
-    
+function playSound(i) {              //plays pokemon Sound *graaahhh*
+
     let pokemonData = pokemonObjektArray[i];
     //console.log(pokemonData.scream)
     let scream = new Audio(pokemonData.scream);
@@ -88,11 +88,11 @@ function playSound(i){              //plays pokemon Sound *graaahhh*
 
 function statsTemplate(i) {     // renders the statsTemplate in the Canvas
     let pokemonData = pokemonObjektArray[i]
-     document.getElementById('canvas').innerHTML = ``;
-      document.getElementById('canvas').innerHTML = /*html*/`
+    document.getElementById('canvas').innerHTML = ``;
+    document.getElementById('canvas').innerHTML = /*html*/`
 
     <div class="canvas stats column center" id="canvas">
-        <h3 class="headLineBaseStats">Base Stats</h3>
+    <h3 class="headLineBaseStats">Base Stats</h3>
     <label for="file">Attack:</label><progress id="atk" value="${pokemonData.stats.atk}" max="100"> 32% </progress>
     <label for="file">hp:</label><progress id="hp" value="${pokemonData.stats.hp}" max="100"> 32% </progress>
     <label for="file">defense:</label><progress id="def" value="${pokemonData.stats.def}" max="100"> 32% </progress>
@@ -117,12 +117,12 @@ function evochain() {
 }
 
 function toggleDialog() {                //toggle function for dialog field
-document.getElementById(`dialog`).classList.toggle('none');
+    document.getElementById(`dialog`).classList.toggle('none');
 }
 
 let i = 0;
 
-function changeColor(colorCode, i){
+function changeColor(colorCode, i) {
     //console.log(i)
-    document.getElementById(`cardPicBg_${i}`).style.backgroundColor = `${colorCode}`;    
+    document.getElementById(`cardPicBg_${i}`).style.backgroundColor = `${colorCode}`;
 }
