@@ -1,6 +1,9 @@
 function clearMainSpace() {
     return document.getElementById('mainSpace').innerHTML = '';
 }
+let upper = function(){
+    toUpperCase().slice(1)
+}
 
 function smallCardTemplate(pokemon, i) { //render the smallCards 
     //console.log(pokemon);
@@ -103,7 +106,6 @@ function statsTemplate(i) {     // renders the statsTemplate in the Canvas
     `;
 }
 
-
 function evochain() {
     return document.getElementById('canvas').innerHTML = /*html*/`
     <div>
@@ -112,17 +114,22 @@ function evochain() {
         <img>
         <img>
         <img>
-    </div>`
-
+    </div>`;
 }
 
 function toggleDialog() {                //toggle function for dialog field
     document.getElementById(`dialog`).classList.toggle('none');
 }
 
-let i = 0;
-
-function changeColor(colorCode, i) {
+function changeColorSingle(colorCode, i) {
     //console.log(i)
     document.getElementById(`cardPicBg_${i}`).style.backgroundColor = `${colorCode}`;
+}
+
+function noSecType(i){                  //hides second classtype if is none
+    document.getElementById(`type_2${i}`).classList.add('none');
+}
+
+function changeColorTwice(colorCode1, colorCode2, i ){              //gradient for second type
+    document.getElementById(`cardPicBg_${i}`).style.background=` linear-gradient(135deg, ${colorCode1}, ${colorCode2})`;
 }

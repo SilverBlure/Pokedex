@@ -1,15 +1,11 @@
 "use strict";
 
-// To dos
+// To dos:
 
 // evo chain Endpoint https://pokeapi.co/api/v2/evolution-chain/{id}/
-// farbliche darstellung im hintergrund der PokemonSprites, auf den kleinen Karten
 // darstellung der evolution Chain auf dem Evo Reiter
-// fix dialog screen
 // loading spinner till data is fetched
-// sicherstellen das die angezeigten pokemon in der richtigen reihenfolge dargestellt werden
-// vill mit then()
-// such funktion auch mit pokemon id anzeigen
+// such funktion auch mit pokemon id anzeigen und reparieren
 
 
 //Global Varaiables
@@ -85,10 +81,7 @@ async function fetchPokemonData(url, index) {     // fetches pokemon datasets an
     }   
 }
 
-//smallCardTemplate(pokemonData, index);
-                    //checkColor(pokemonData, index);
-
-function renderSmallCards() {                                //<------ hier sitzt der fehler!!!
+function renderSmallCards() {                              // render the small cards
     clearMainSpace();
     for (let i = 0; i < pokemonObjektArray.length; i++) {
         smallCardTemplate(pokemonObjektArray[i], i);

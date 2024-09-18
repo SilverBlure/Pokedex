@@ -21,19 +21,19 @@ const colorObjekt = {
     none: 'none',
 };
 
-//console.log(colorObjekt[2]);     // wenn man die keys ausloggt bekommt man ein array mit Keys
-
 function checkColor(pokemonData, index) {
-    
     let colorObjektAsArray = Object.keys(colorObjekt);
     let type_1 = pokemonData.type_1;
-    let key = colorObjektAsArray.find((element) => element === type_1);
-    let colorCode = colorObjekt[key]; // hier muss ich die [] eckigent brackets nutzen weil ich eine variable als caller nehme
-    //console.log(colorCode);   
-    changeColor(colorCode, index);
-    
-    
-
-    //console.log(Object.keys(colorObjekt),);
-
+    let type_2 = pokemonData.type_2;
+    let key_1 = colorObjektAsArray.find((element) => element === type_1);
+    let key_2 = colorObjektAsArray.find((element) => element === type_2);
+    let colorCode1 = colorObjekt[key_1]; // hier muss ich die [] eckigent brackets nutzen weil ich eine variable als caller nehme
+    let colorCode2 = colorObjekt[key_2];
+    if(key_2 === 'none'){
+        noSecType(index);
+        changeColorSingle(colorCode1, index);
+    }else{
+        console.log('ich habe eine zweite klasse')
+        changeColorTwice(colorCode1, colorCode2, index );
+    };
 }
