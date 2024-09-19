@@ -178,7 +178,7 @@ button {
 }
 
 .none {
-    display: none;
+    display: none !important;
 }
 
 .headline {
@@ -253,3 +253,30 @@ h2 {
 .mar16 {
     margin: 16px;
 }
+
+.loadingSpinner{
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 100%;
+    width: 100%;
+    z-index: 200;
+    position: fixed;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pokeball{
+    scale: 3;
+    animation: rotate 1s normal linear infinite;
+}
+
+@keyframes rotate {
+    0% {
+      -webkit-transform: rotate3d(0, 0, 1, 0deg);
+      transform: rotate3d(0, 0, 1, 0deg);
+    }
+    100% {
+      transform: rotate3d(0, 0, 1, 360deg);
+    }
+  }

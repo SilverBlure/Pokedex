@@ -5,6 +5,10 @@ let upper = function(){
     toUpperCase().slice(1)
 }
 
+
+
+
+
 function smallCardTemplate(pokemon, i) { //render the smallCards 
     //console.log(pokemon);
     return document.getElementById('mainSpace').innerHTML += /*html*/`

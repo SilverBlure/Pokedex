@@ -33,7 +33,7 @@ function checkColor(pokemonData, index) {
         noSecType(index);
         changeColorSingle(colorCode1, index);
     }else{
-        console.log('ich habe eine zweite klasse')
+        //console.log('ich habe eine zweite klasse')
         changeColorTwice(colorCode1, colorCode2, index );
     };
 }

@@ -11,12 +11,15 @@
 //Global Varaiables
 let urlDatabase = [];
 let pokemonObjektArray = [];
+let currentPokemonObjectArray = pokemonObjektArray;
 
 
 function init() {
+    
     firstLoad();
     loadPropertys();
     loadUrls();
+    
 }
 
 function firstLoad() {                   // set Propertys at the first load
@@ -48,7 +51,7 @@ async function getUrls(amount, currentCard) {        // getting pokemon urls and
     }
 }
 
-async function fetchPokemonData(url, index) {     // fetches pokemon datasets and put it in objects
+async function fetchPokemonData(url,) {     // fetches pokemon datasets and put it in objects
     let amount = localStorage.getItem('amount')
     let pokemonResponse = await fetch(url);
     let pokemonDataAsJson = await pokemonResponse.json();
@@ -81,7 +84,9 @@ async function fetchPokemonData(url, index) {     // fetches pokemon datasets an
     }   
 }
 
-function renderSmallCards() {                              // render the small cards
+
+
+function renderSmallCards(currentPokemonObjectArray) {                              // render the small cards
     clearMainSpace();
     for (let i = 0; i < pokemonObjektArray.length; i++) {
         smallCardTemplate(pokemonObjektArray[i], i);
@@ -93,7 +98,7 @@ function renderSmallCards() {                              // render the small c
 function saveCardOnSide() {             	        // saves the new amount of cards in the local storage
     pokemonObjektArray = [];
     let amountOfCards = document.getElementById('amount').value;
-    if (amountOfCards > 20 || amountOfCards === "WhatIsMax?") {
+    if (amountOfCards > 40) {
         alert('Bitte gebe eine kleineren Wert ein!');
     } else {
         localStorage.setItem('amount', amountOfCards);
@@ -142,23 +147,27 @@ async function loadUrls() {
     urlDatabase = mainUrlAsJson.results;
 }
 
-function search() {
+function getSearchWord(){
+    let searchValue = document.getElementById('searchValue').value; 
+    if(searchValue.length>= 3){
+        search(searchValue);
+    }else{
+        alert('Gebe bitte mindestens 3 oder mehr Buchstaben ein!');
+    };
+}
 
-    let searchValue = document.getElementById('searchValue').value;             //get value of inputfield
-    let lowerCaseSearchValue = searchValue.toLowerCase();                      //set string to lowerCase
-    console.log(urlDatabase);
+function search(value) {
+    let lowerCaseSearchValue = value.toLowerCase();                      //set string to lowerCase
+    console.log(lowerCaseSearchValue);
     //console.log(/*typeof*/ lowerCaseSearchValue);                           //type of gives me the datatype
 
 
-    const result = urlDatabase.find((element) => element.name === lowerCaseSearchValue);    //search in urlDatabase for element with name of input field
-    if (result) {
-        const urlOfResult = result.url;
-        //console.log(urlOfResult);
-        clearMainSpace();
-        fetchPokemonData(urlOfResult);
-    } else {
-        console.log("nothing found here!");
-    }
+    const currentPokemonObjectArray = pokemonObjektArray.filter(element => element.name.includes(lowerCaseSearchValue));    //search in urlDatabase for element with name of input field
+   
+        //console.log(result);
+        pokemonObjektArray = currentPokemonObjectArray;
+    renderSmallCards(currentPokemonObjectArray);
+    console.log(currentPokemonObjectArray);
 
 
     //return items.filter(item => item.name.toLowerCase().includes(lowerCaseQuery));
