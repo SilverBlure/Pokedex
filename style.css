@@ -268,7 +268,7 @@ h2 {
 
 .pokeball{
     scale: 3;
-    animation: rotate 1s normal linear infinite;
+    animation: rotate 3s normal linear infinite;
 }
 
 @keyframes rotate {

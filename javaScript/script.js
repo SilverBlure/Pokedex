@@ -41,6 +41,7 @@ function loadPropertys() {              // loading Propertys from localStorage
 }
 
 async function getUrls(amount, currentCard) {        // getting pokemon urls and seperate them
+    document.getElementById('loadingSpinner').classList.remove('none');
     let pokemonUrls = await fetch("https://pokeapi.co/api/v2/pokemon?limit=" + amount + "&offset=" + currentCard);
     let pokemonUrlsAsJson = await pokemonUrls.json();
     //console.log(pokemonUrlsAsJson);
@@ -92,7 +93,7 @@ function renderSmallCards(currentPokemonObjectArray) {                          
         smallCardTemplate(pokemonObjektArray[i], i);
         checkColor(pokemonObjektArray[i], i);
     }
-
+    document.getElementById('loadingSpinner').classList.add('none');
 }
 
 function saveCardOnSide() {             	        // saves the new amount of cards in the local storage
