@@ -1,16 +1,8 @@
 function clearMainSpace() {
     return document.getElementById('mainSpace').innerHTML = '';
 }
-let upper = function(){
-    toUpperCase().slice(1)
-}
-
-
-
-
 
 function smallCardTemplate(pokemon, i) { //render the smallCards 
-    //console.log(pokemon);
     return document.getElementById('mainSpace').innerHTML += /*html*/`
     <div onclick="dialogTemplate(${i})" class="cardBody cardSmall marle16 marto16 marbo8">
     <div  class="center">

@@ -4,8 +4,7 @@
 
 // evo chain Endpoint https://pokeapi.co/api/v2/evolution-chain/{id}/
 // darstellung der evolution Chain auf dem Evo Reiter
-// loading spinner till data is fetched
-// such funktion auch mit pokemon id anzeigen und reparieren
+// such funktion und reparieren
 
 
 //Global Varaiables
@@ -127,7 +126,6 @@ function back() {
     let amount = parseInt(localStorage.getItem('amount'));
     let newCurrentCard = currentCard - amount;
     if (newCurrentCard >= 0) {
-        //console.log(newCurrentCard);
         localStorage.removeItem('currentCard');
         localStorage.setItem('currentCard', newCurrentCard);
         clearMainSpace();
@@ -164,9 +162,7 @@ function search(value) {
 
 
     const currentPokemonObjectArray = pokemonObjektArray.filter(element => element.name.includes(lowerCaseSearchValue));    //search in urlDatabase for element with name of input field
-   
-        //console.log(result);
-        pokemonObjektArray = currentPokemonObjectArray;
+    pokemonObjektArray = currentPokemonObjectArray;
     renderSmallCards(currentPokemonObjectArray);
     console.log(currentPokemonObjectArray);
 
