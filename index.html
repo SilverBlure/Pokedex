@@ -24,9 +24,12 @@
                 <h1 class="headline ">Pokemon</h1>
                 <h2>catch all of the first gen.</h2>
             </div>
+            <div class="closeSearchBtn">
+                <button class="closeSearchBtb none"  id="closeSearch" onclick="closeSearch()">X schliessen</button>
+            </div>
             <div class="end marbo6">
                 <input placeholder="search name!" id="searchValue">
-                <button onclick="getSearchWord()">search!</button>
+                <button  onclick="getSearchWord()">search!</button>
             </div>
         </header>
     </header>
@@ -44,7 +47,7 @@
     <footer class="page cardBody footer mar16">
         <div class="footer">
             <div>
-                <input id="amount" max="40" type="number" placeholder="max. 40"><button onclick="saveCardOnSide()">go!</button>
+                <input id="amount" max="120" type="number" placeholder="max. 120"><button onclick="saveCardOnSide()">go!</button>
             </div>
             <div>
                 <a class="link">Impressum</a><br>

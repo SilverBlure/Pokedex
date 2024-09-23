@@ -47,6 +47,10 @@ body {
     border-color: rgb(68, 68, 68);
 }
 
+.cardSmall:hover {
+   transform: scale(1.1);  /*zoom function*/ 
+}
+
 .size {
     border: 2px solid white;
     margin-top: 6px;
@@ -168,7 +172,6 @@ button {
     width: 100%;
     z-index: 100;
     position: fixed;
-    cursor: pointer;
 }
 
 .dialog {
@@ -260,7 +263,6 @@ h2 {
     width: 100%;
     z-index: 200;
     position: fixed;
-    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -269,6 +271,20 @@ h2 {
 .pokeball{
     scale: 3;
     animation: rotate 3s normal linear infinite;
+}
+
+.closeSearchBtn{
+    display: flex;
+    align-items: end;
+}
+
+.closeSearchBtb{
+    height: 64px;
+    width: 136px;
+}
+
+.pointer{
+    cursor: pointer;
 }
 
 @keyframes rotate {

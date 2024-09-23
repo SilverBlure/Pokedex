@@ -2,23 +2,28 @@
 
 // To dos:
 
-// evo chain Endpoint https://pokeapi.co/api/v2/evolution-chain/{id}/
-// darstellung der evolution Chain auf dem Evo Reiter
-// such funktion und reparieren
+//  evo chain Endpoint https://pokeapi.co/api/v2/evolution-chain/{id}/
+//  darstellung der evolution Chain auf dem Evo Reiter
+//  such funktion und reparieren
+//  hover function
 
 
 //Global Varaiables
 let urlDatabase = [];
+let allPokemonUrlArray = [];
+let completePokemonObjektArray = [];
 let pokemonObjektArray = [];
 let currentPokemonObjectArray = pokemonObjektArray;
 
 
 function init() {
-    
+
     firstLoad();
     loadPropertys();
     loadUrls();
-    
+    pokemonEvolution();
+    loadAll();
+
 }
 
 function firstLoad() {                   // set Propertys at the first load
@@ -33,11 +38,26 @@ function firstLoad() {                   // set Propertys at the first load
 }
 
 function loadPropertys() {              // loading Propertys from localStorage
+    document.getElementById('loadingSpinner').classList.add('none');
     let amount = localStorage.getItem('amount');
     let currentCard = localStorage.getItem('currentCard');
     //console.log(currentCard, amount);
     getUrls(amount, currentCard);
 }
+
+/*async function loadAll(){
+    for(let i = 0; i<urlDatabase.length; i++){
+        let singlePokemonUrl = urlDatabase[i]['url'];
+        console.log(singlePokemonUrl);
+        allPokemonUrlArray.push(singlePokemonUrl);
+    }
+   console.log(allPokemonUrlArray);
+   for(let j = 0;j<=allPokemonUrlArray; j++){
+    let allPokemon = await fetch(allPokemonUrlArray[j]);
+    console.log(allPokemon);
+   }
+    
+}*/
 
 async function getUrls(amount, currentCard) {        // getting pokemon urls and seperate them
     document.getElementById('loadingSpinner').classList.remove('none');
@@ -51,7 +71,21 @@ async function getUrls(amount, currentCard) {        // getting pokemon urls and
     }
 }
 
-async function fetchPokemonData(url,) {     // fetches pokemon datasets and put it in objects
+async function pokemonEvolution() {
+    let idValue = 5;
+    let pokemonEvolutionChainz = await fetch(`https://pokeapi.co/api/v2/evolution-chain/${idValue}/`);
+    let pokemonEvolutionChainzAsJson = await pokemonEvolutionChainz.json();
+    console.log(pokemonEvolutionChainzAsJson);
+    let evolutionChainObjekt = {
+        chainId: pokemonEvolutionChainzAsJson['id'],
+        firstPokemon: pokemonEvolutionChainzAsJson['chain']['species']['name'],
+        second: pokemonEvolutionChainzAsJson['chain']['evolves_to'][0]['species']['name'],
+        third: pokemonEvolutionChainzAsJson['chain']['evolves_to'][0]['evolves_to'][0]['species']['name'],
+    }
+    console.log(evolutionChainObjekt);
+}
+
+async function fetchPokemonData(url) {     // fetches pokemon datasets and put it in objects
     let amount = localStorage.getItem('amount')
     let pokemonResponse = await fetch(url);
     let pokemonDataAsJson = await pokemonResponse.json();
@@ -76,17 +110,21 @@ async function fetchPokemonData(url,) {     // fetches pokemon datasets and put 
         scream: pokemonDataAsJson['cries']['legacy'],
     }
     pokemonObjektArray.push(pokemonData);
-    //console.log(pokemonDataAsJson);   
-    if(pokemonObjektArray.length == amount){
-        pokemonObjektArray.sort((a,b) => a.id - b.id);
-        //console.log(pokemonObjektArray);
-        renderSmallCards();
-    }   
+    //console.log(pokemonDataAsJson);
+    clearMainSpace();
+    sortObject();
+    renderSmallCards(pokemonObjektArray);
 }
 
+function sortObject() {
+    if (pokemonObjektArray.length == amount) {
+        pokemonObjektArray.sort((a, b) => a.id - b.id);
+        //console.log(pokemonObjektArray);
 
+    }
+}
 
-function renderSmallCards(currentPokemonObjectArray) {                              // render the small cards
+function renderSmallCards(pokemonObjektArray) {                              // render the small cards
     clearMainSpace();
     for (let i = 0; i < pokemonObjektArray.length; i++) {
         smallCardTemplate(pokemonObjektArray[i], i);
@@ -105,7 +143,6 @@ function saveCardOnSide() {             	        // saves the new amount of card
     }
     clearMainSpace();
     loadPropertys();
-
 }
 
 function next() {
@@ -146,27 +183,36 @@ async function loadUrls() {
     urlDatabase = mainUrlAsJson.results;
 }
 
-function getSearchWord(){
-    let searchValue = document.getElementById('searchValue').value; 
-    if(searchValue.length>= 3){
+function getSearchWord() {
+    document.getElementById('loadingSpinner').classList.remove('none');
+    let searchValue = document.getElementById('searchValue').value;
+    if (searchValue.length >= 3) {
         search(searchValue);
-    }else{
+    } else {
         alert('Gebe bitte mindestens 3 oder mehr Buchstaben ein!');
     };
 }
 
 function search(value) {
-    let lowerCaseSearchValue = value.toLowerCase();                      //set string to lowerCase
-    console.log(lowerCaseSearchValue);
-    //console.log(/*typeof*/ lowerCaseSearchValue);                           //type of gives me the datatype
+    pokemonObjektArray = []
+    let lowerCaseSearchValue = value.toLowerCase();      //set value to lower case so its equeal to names of object                //set string to lowerCase
+    document.getElementById('closeSearch').classList.remove('none');
+    const currentPokemonObjectArray = urlDatabase.filter(element => element.name.includes(lowerCaseSearchValue));    //search in urlDatabase for element with name of input field
+    if (currentPokemonObjectArray >= 1) {
+        console.log("true");
+        for (let i = 0; i < currentPokemonObjectArray.length; i++) {
+            console.log(currentPokemonObjectArray[i]['url']);
+            fetchPokemonData(currentPokemonObjectArray[i]['url']);
+        }
+    } else {
+        alert('Sorry, nothing found with this name!');
+        closeSearch();
+    }
+}
 
-
-    const currentPokemonObjectArray = pokemonObjektArray.filter(element => element.name.includes(lowerCaseSearchValue));    //search in urlDatabase for element with name of input field
-    pokemonObjektArray = currentPokemonObjectArray;
-    renderSmallCards(currentPokemonObjectArray);
-    console.log(currentPokemonObjectArray);
-
-
-    //return items.filter(item => item.name.toLowerCase().includes(lowerCaseQuery));
-
+function closeSearch() {
+    pokemonObjektArray = []
+    document.getElementById('closeSearch').classList.add('none');
+    loadPropertys();
+    document.getElementById('loadingSpinner').classList.add('none');
 }

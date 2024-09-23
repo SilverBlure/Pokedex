@@ -21,9 +21,9 @@ function smallCardTemplate(pokemon, i) { //render the smallCards
 
 
 function dialogTemplate(i) {        //load the data in the Dialog Template and execute the toggleDialog funktion
-    console.log(pokemonObjektArray);
+    //console.log(pokemonObjektArray);
     let pokemonData = pokemonObjektArray[i]
-    console.log(pokemonData);
+    //console.log(pokemonData);
     document.getElementById('dialog').innerHTML =/*html*/`
  <div id="dialog" class="dialogBg dialog">
         <div class="bigCardBody">
@@ -38,9 +38,9 @@ function dialogTemplate(i) {        //load the data in the Dialog Template and e
                 <img class="size borderNone" src="${pokemonData.backPic}">
             </div>
             <div class="flex center" >
-                <button onclick="mainTemplate(${i})" class="buttonWidth">main</button>
-                <button onclick="statsTemplate(${i})" class="buttonWidth">stats</button>
-                <button onclick="evochainTemplate(${i})" class="buttonWidth">evochain</button>
+                <button onclick="mainTemplate(${i})" class="buttonWidth pointer">main</button>
+                <button onclick="statsTemplate(${i})" class="buttonWidth pointer">stats</button>
+                <button onclick="evochainTemplate(${i})" class="buttonWidth pointer">evochain</button>
             </div>
             <div class="center">
             <div class="spacer flex center"></div>
@@ -73,7 +73,7 @@ function mainTemplate(i) {              //renders the MainTemplate in the Canvas
     </tr>
     
     </table>
-    <button onclick="playSound(${i})">scream</button>
+    <button class="pointer" onclick="playSound(${i})">scream</button>
     </div>`;
 }
 
@@ -105,11 +105,11 @@ function statsTemplate(i) {     // renders the statsTemplate in the Canvas
 function evochain() {
     return document.getElementById('canvas').innerHTML = /*html*/`
     <div>
-        <img>
-        <img>
-        <img>
-        <img>
-        <img>
+        <img src="">
+        <img src="">
+        <img src="">
+        <img src="">
+        <img src="">
     </div>`;
 }
 
