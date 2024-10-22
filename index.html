@@ -9,7 +9,8 @@
     <script src="./javaScript/script.js"></script>
     <script src="./javaScript/templates.js"></script>
     <script src="./javaScript/colorControler.js"></script>
-    <link rel="stylesheet" href="./style.css"></link>
+    <link rel="stylesheet" href="./style.css">
+    </link>
 </head>
 
 
@@ -18,21 +19,28 @@
     <div id="loadingSpinner" class="none loadingSpinner">
         <img class="pokeball" src="./icons/Pokeball.svg">
     </div>
-    <header class="page mar16">
+    <headerFrame class="page mar16">
         <header class="header ">
             <div class="alingCenter">
                 <h1 class="headline ">Pokemon</h1>
-                <h2>catch all of the first gen.</h2>
+                <h2>catch em all.</h2>
             </div>
             <div class="closeSearchBtn">
-                <button class="closeSearchBtb none"  id="closeSearch" onclick="closeSearch()">X schliessen</button>
+                <button class="closeSearchBtb none" id="closeSearch" onclick="closeSearch()">X schliessen</button>
             </div>
-            <div class="end marbo6">
-                <input placeholder="search name!" id="searchValue">
-                <button  onclick="getSearchWord()">search!</button>
+            <div class="end dropdown marbo6">
+                <div>
+                    <input class="inputField" oninput="search()" placeholder="search name!" id="searchValue"> <!-- hier einbinden das dropdown menue-->
+                    <div>
+                        <div class="frame" id="searchResults">
+                           
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </header>
-    </header>
+    </headerFrame>
 
     <main class="cardBody mar16">
         <div class="wrap center">
@@ -47,7 +55,8 @@
     <footer class="page cardBody footer mar16">
         <div class="footer">
             <div>
-                <input id="amount" max="120" type="number" placeholder="max. 120"><button onclick="saveCardOnSide()">go!</button>
+                <input id="amount" max="120" type="number" placeholder="max. 120"><button
+                    onclick="saveAmount()">go!</button>
             </div>
             <div>
                 <a class="link">Impressum</a><br>

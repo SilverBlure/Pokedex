@@ -23,8 +23,8 @@ const colorObjekt = {
 
 function checkColor(pokemonData, index) {
     let colorObjektAsArray = Object.keys(colorObjekt);
-    let type_1 = pokemonData.type_1;
-    let type_2 = pokemonData.type_2;
+    let type_1 = pokemonData.types.type_1;
+    let type_2 = pokemonData.types.type_2;
     let key_1 = colorObjektAsArray.find((element) => element === type_1);
     let key_2 = colorObjektAsArray.find((element) => element === type_2);
     let colorCode1 = colorObjekt[key_1]; // hier muss ich die [] eckigent brackets nutzen weil ich eine variable als caller nehme
@@ -35,4 +35,17 @@ function checkColor(pokemonData, index) {
     }else{
         changeColorTwice(colorCode1, colorCode2, index );
     };
+}
+
+function changeColorSingle(colorCode, i) {
+    //console.log(i)
+    document.getElementById(`cardPicBg_${i}`).style.backgroundColor = `${colorCode}`;
+}
+
+function noSecType(i){                  //hides second classtype if is none
+    document.getElementById(`type_2${i}`).classList.add('none');
+}
+
+function changeColorTwice(colorCode1, colorCode2, i ){              //gradient for second type
+    document.getElementById(`cardPicBg_${i}`).style.background=` linear-gradient(135deg, ${colorCode1}, ${colorCode2})`;
 }

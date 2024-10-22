@@ -6,15 +6,15 @@ function smallCardTemplate(pokemon, i) { //render the smallCards
     return document.getElementById('mainSpace').innerHTML += /*html*/`
     <div onclick="dialogTemplate(${i})" class="cardBody cardSmall marle16 marto16 marbo8">
     <div  class="center">
-        <img id="cardPicBg_${i}" class="size" src="${pokemon.frontPic}">
+        <img id="cardPicBg_${i}" class="size" src="${pokemon.sprites.front}">
     </div>
     <div class="tags margin8 ">
-        <div id="type_1${i}" class="border">${pokemon.type_1}</div>
-        <div id="type_2${i}" class="border">${pokemon.type_2}</div>
+        <div id="type_1${i}" class="border">${pokemon.types.type_1}</div>
+        <div id="type_2${i}" class="border">${pokemon.types.type_2}</div>
         <div class="border">${pokemon.id}</div>
     </div>
     <div class="tags ">
-        <h1>${pokemon.name}</h1>
+        <h1>${pokemon.name.name}</h1>
     </div>
 </div>`;
 }
@@ -22,25 +22,27 @@ function smallCardTemplate(pokemon, i) { //render the smallCards
 
 function dialogTemplate(i) {        //load the data in the Dialog Template and execute the toggleDialog funktion
     //console.log(pokemonObjektArray);
-    let pokemonData = pokemonObjektArray[i]
+    let pokemonData = pokemonObjectArray[i];
     //console.log(pokemonData);
     document.getElementById('dialog').innerHTML =/*html*/`
- <div id="dialog" class="dialogBg dialog">
+ <div onclick="toggleDialog()" id="dialog" class="dialogBg dialog">
         <div class="bigCardBody">
-            <div class="flex spaceAround"> 
-                <h2>${pokemonData.id}</h2>
-                <h2>${pokemonData.name}</h2>
-                <img onclick="toggleDialog()" src="./icons/close_24dp_FILL0_wght400_GRAD0_opsz24.svg">
+            <div class="flex spaceAround">
+                <img onclick="lastCard(${i})" src="./icons/arrow_back.svg"> 
+                <div class='flex'>
+                <h2>${pokemonData.name.name} </h2>
+                </div>
+                <img onclick="nextCard(${i})" src="./icons/arrow_forward.svg">
             </div>
             <div class="flex saceAround">
-                <img class="size borderNone" src="${pokemonData.frontPic}">
+                <img class="size borderNone" src="${pokemonData.sprites.front}">
                 <div></div>
-                <img class="size borderNone" src="${pokemonData.backPic}">
+                <img class="size borderNone" src="${pokemonData.sprites.back}">
             </div>
             <div class="flex center" >
-                <button onclick="mainTemplate(${i})" class="buttonWidth pointer">main</button>
-                <button onclick="statsTemplate(${i})" class="buttonWidth pointer">stats</button>
-                <button onclick="evochainTemplate(${i})" class="buttonWidth pointer">evochain</button>
+            <button onclick="event.stopPropagation(); mainTemplate(${i})" class="buttonWidth pointer">Basis Werte</button>
+                <button onclick="event.stopPropagation(); statsTemplate(${i})" class="buttonWidth pointer">Grundwerte</button>
+                <button onclick="event.stopPropagation(); behaivorTemplate(${i})" class="buttonWidth pointer">Verhalten</button>
             </div>
             <div class="center">
             <div class="spacer flex center"></div>
@@ -54,39 +56,44 @@ function dialogTemplate(i) {        //load the data in the Dialog Template and e
 }
 
 function mainTemplate(i) {              //renders the MainTemplate in the Canvas
-    let pokemonData = pokemonObjektArray[i]
+    let pokemonData = pokemonObjectArray[i]
     document.getElementById('canvas').innerHTML = /*html*/`
     <div class="marto16">
     <table>
     <tr>
-    <td>basestats</th>
+    <td>Basis Werte</th>
     </tr>
     
     <tr>
-    <td>height:</td>
+    <td>pokemon ID:</td>
+    <td>${pokemonData.id}</td>
+    </tr>
+
+    <tr>
+    <td>Grösse:</td>
     <td>${pokemonData.height}</td>
     </tr>
     
     <tr>
-    <td>weight:</td>
+    <td>Gewicht:</td>
     <td>${pokemonData.weight}</td>
     </tr>
     
     </table>
-    <button class="pointer" onclick="playSound(${i})">scream</button>
+    <button class="pointer" onclick="event.stopPropagation(); playSound(${i})">Schrei!</button>
     </div>`;
 }
 
 function playSound(i) {              //plays pokemon Sound *graaahhh*
 
-    let pokemonData = pokemonObjektArray[i];
+    let pokemonData = pokemonObjectArray[i];
     //console.log(pokemonData.scream)
     let scream = new Audio(pokemonData.scream);
     return scream.play();
 }
 
 function statsTemplate(i) {     // renders the statsTemplate in the Canvas
-    let pokemonData = pokemonObjektArray[i]
+    let pokemonData = pokemonObjectArray[i]
     document.getElementById('canvas').innerHTML = ``;
     document.getElementById('canvas').innerHTML = /*html*/`
 
@@ -97,35 +104,31 @@ function statsTemplate(i) {     // renders the statsTemplate in the Canvas
     <label for="file">defense:</label><progress id="def" value="${pokemonData.stats.def}" max="100"> 32% </progress>
     <label for="file">spAttack:</label><progress id="spAtk" value="${pokemonData.stats.spAtk}" max="100"> 32% </progress>
     <label for="file">spDefense:</label><progress id="spDef" value="${pokemonData.stats.spDef}" max="100"> 32% </progress>
-    <label for="file" >speed:</label><progress id="sp" value="${pokemonData.stats.sp}" max="100"> 32% </progress>
+    <label for="file" >speed:</label><progress id="sp" value="${pokemonData.stats.speed}" max="100"> 32% </progress>
     </div>
     `;
 }
 
-function evochain() {
+function behaivorTemplate(i) {
+    let pokemonData = pokemonObjectArray[i];
     return document.getElementById('canvas').innerHTML = /*html*/`
-    <div>
-        <img src="">
-        <img src="">
-        <img src="">
-        <img src="">
-        <img src="">
+    <div class="behaivorText">
+        ${pokemonData.text}
     </div>`;
 }
 
-function toggleDialog() {                //toggle function for dialog field
-    document.getElementById(`dialog`).classList.toggle('none');
+function toggleDialog(){
+    document.getElementById('dialog').classList.toggle('none');
 }
 
-function changeColorSingle(colorCode, i) {
-    //console.log(i)
-    document.getElementById(`cardPicBg_${i}`).style.backgroundColor = `${colorCode}`;
-}
+function searchResultsTemplate(name, id){
+    console.log(typeof id);
+    //document.getElementById('searchResults').innerHTML= ``;
+    document.getElementById('searchResults').innerHTML += /*html*/`
+    <li onclick="loadSelected(${id})" class="searchResponse frame" >${name} id:${id}</li>    
+    `;
+    }
 
-function noSecType(i){                  //hides second classtype if is none
-    document.getElementById(`type_2${i}`).classList.add('none');
-}
-
-function changeColorTwice(colorCode1, colorCode2, i ){              //gradient for second type
-    document.getElementById(`cardPicBg_${i}`).style.background=` linear-gradient(135deg, ${colorCode1}, ${colorCode2})`;
+function clearSearchResults(){
+    document.getElementById('searchResults').innerHTML=``;
 }
